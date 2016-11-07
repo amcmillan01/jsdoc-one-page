@@ -67,7 +67,7 @@ function saveOutputFileContent() {
 
 function generateLink(config){
   var memberOf = (config.memberof || '').replace(/([^\a-z]+)/gi, '-');
-  var link = (memberOf.length ? memberOf + '-' : '') + config.name;
+  var link = (memberOf.length ? memberOf + '-' : '') + (config.name ? config.name.replace(/([^\a-z]+)/gi, '-') : '' );
   return link;
 }
 
@@ -329,6 +329,7 @@ function generate(title, docs, filename, resolveLinks) {
         var hash = link
           .replace(/\.html/, '')
           .replace(/([^\a-z"]+)/gi, '-')
+          .replace(/-event-/, '-')
           .replace(/^"/, '"#');
 
         html = html.replace(link, hash).replace(/global-/, '');
