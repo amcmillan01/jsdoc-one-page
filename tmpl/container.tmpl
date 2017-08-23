@@ -44,6 +44,7 @@
 <article>
     <div class="container-overview">
     <?js if (doc.kind === 'module' && doc.modules) { ?>
+        <h2><?js= doc.name ?></h2>
         <?js if (doc.description) { ?>
             <div class="description"><?js= doc.description ?></div>
         <?js } ?>
