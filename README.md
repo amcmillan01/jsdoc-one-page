@@ -1,6 +1,6 @@
 # jsdoc-one-page
 
-[![npm version](https://badge.fury.io/js/jsdoc-one-page.svg)](https://badge.fury.io/js/jsdoc-one-page)
+[![npm version](https://badge.fury.io/js/jsdoc-one-page.svg)](https://www.npmjs.com/package/jsdoc-one-page)
 [![Build Status](https://travis-ci.org/amcmillan01/jsdoc-one-page.svg?branch=master)](https://travis-ci.org/amcmillan01/jsdoc-one-page)
 
 A one page jsdoc template based on the default jsdoc template.
