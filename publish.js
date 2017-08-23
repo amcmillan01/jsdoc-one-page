@@ -55,8 +55,7 @@ function saveOutputFileContent() {
   ).join('\n');
 
   var singlePageApiHtml = [header].concat(
-    '<div id="main">' + apiContentOnlyHtml + '</div>',
-    '<nav>' + nav + '</nav>',
+    '<div id="main"><h2>Table of Contents</h2><nav>' + nav + '</nav>' + apiContentOnlyHtml + '</div>',
     footer
   ).join('\n');
 
@@ -384,21 +383,70 @@ function attachModuleSymbols(doclets, modules) {
 function buildMemberNav(items, itemHeading, itemsSeen) {
   var nav = '';
 
+  var item = items[i];
+  var moduleLongname;
+
+  var justPath;
+  var directoryGroup;
+
+  var directoryCheck;
+  var directory;
+
+  var lastGroup = '';
+  var i;
+
   if (items.length) {
     var itemsNav = '';
 
-    items.forEach(function(item) {
-      if ( !hasOwnProp.call(item, 'longname') ) {
-        itemsNav += '<li>' + item.name + '</li>';
-      }
-      else if ( !hasOwnProp.call(itemsSeen, item.longname) ) {
-        itemsNav += '<li>' + linkTo(item) + '</li>';
-        itemsSeen[item.longname] = true;
-      }
-    });
+    // Group modules by folder in table of contents. This works because the items are sorted in order. For example we can process all static files, then test files, and then controller files, allowing us to drop the header in every time we come across a different type.
+    if (itemHeading === 'Modules') {
+      for (i = 0; i < items.length; i++) {
+        item = items[i];
+        moduleLongname = item.longname; // Example to follow the string splitting: module:test/unit/mvc/models/updateShow
 
-    if (itemsNav !== '') {
-      nav += '<h3>' + itemHeading + '</h3><ul>' + itemsNav + '</ul>';
+        justPath = moduleLongname.split(':')[1]; // Example cont.: test/unit/mvc/models/updateShow
+        directoryGroup = justPath.split('/'); // Example cont.: [ 'test', 'unit', 'mvc', 'models', 'updateShow' ]
+
+        directoryCheck = directoryGroup[1]; // Example cont.: If there something after the slash that means that it is a path and that the first word in the array is the top level directory, so we can group by that.
+        directory = directoryGroup[0]; // Example cont.: 'test'
+
+        if (directoryCheck) {
+          if (lastGroup !== directory) {
+            lastGroup = directory;
+
+            directory = directory.charAt(0).toUpperCase() + directory.slice(1) // Uppercase first letter of directory name
+
+            nav += '<h3>' + directory + '</h3>';
+          }
+
+          itemNameSpliced = item.name.substring(item.name.split('/')[0].length).slice(1) + '.js';
+
+          nav += '<li>' + itemNameSpliced + '</li>';
+        }
+        else {
+          if (lastGroup !== 'root') {
+            lastGroup = 'root';
+
+            nav += '<h3>Root</h3>';
+          }
+          nav += '<li>' + item.name + '.js' + '</li>';
+        }
+      }
+    }
+    else {
+      items.forEach(function(item) {
+        if ( !hasOwnProp.call(item, 'longname') ) {
+          itemsNav += '<li>' + item.name + '</li>';
+        }
+        else if ( !hasOwnProp.call(itemsSeen, item.longname) ) {
+          itemsNav += '<li>' + linkTo(item) + '</li>';
+          itemsSeen[item.longname] = true;
+        }
+      });
+
+      if (itemsNav !== '') {
+        nav += '<h3>' + itemHeading + '</h3><ul>' + itemsNav + '</ul>';
+      }
     }
   }
 
