@@ -8,13 +8,22 @@
   },
   "author": "Andrei McMillan",
   "description": "A one page jsdoc template based on the default jsdoc template.",
+  "bin": {
+    "jsdoc1p": "./node_modules/jsdoc/jsdoc.js"
+  },
   "keywords": [
     "jsdoc-one-page",
     "jsdoc",
-    "template"
+    "template",
+    "jsdoc1p"
   ],
   "scripts": {
+    "prepare": "npm install && mkdir -p output",
+    "doc": "jsdoc -t . -r ./node_modules/jsdoc/lib/jsdoc -d output",
     "test": "echo 'write some tests!'"
   },
-  "dependencies": {}
+  "dependencies": {
+    "jsdoc": "^3.5.4",
+    "taffydb": "^2.7.3"
+  }
 }

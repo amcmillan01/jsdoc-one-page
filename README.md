@@ -7,9 +7,10 @@ A one page jsdoc template based on the default jsdoc template.
 
 ## Getting Started
 
-- npm install jsdoc
 - npm install jsdoc-one-page
-- jsdoc -t PATH/TO/jsdoc-one-page -r JS_SOURCE_DIR/FILE -d OUTPUT_DIR 
+- jsdoc1p -t ./node_modules/jsdoc-one-page -r JS_SOURCE_DIR_OR_FILE -d OUTPUT_DIR
+    - `JS_SOURCE_DIR_OR_FILE` = the name of the directory or file the process
+    - `OUTPUT_DIR` = the directory where the generated docs will be saved
 
 ## Reference
 
