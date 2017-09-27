@@ -4,12 +4,12 @@ var self = this;
 
 ?>
 <?js if (data.kind !== 'module') { ?>
-    <?js if (data.kind === 'class' && data.classdesc) { ?>
+    <?js if (data.kind === 'class' && !data.hideconstructor && data.classdesc) { ?>
     <h2>Constructor</h2>
     <?js } ?>
 
-    <h4 class="name foo" id="<?js= self.generateLink(data) ?>"><?js= data.attribs + (kind === 'class' ? 'new ' : '') +
-    name + (data.signature || '') ?></h4>
+    <h4 class="name" id="<?js= self.generateLink(data) ?>"><?js= data.attribs + (data.kind === 'class' && !data.hideconstructor ? 'new ' : '') +
+    (data.kind === 'class' && data.hideconstructor ? '' :  name + (data.signature || '')) ?></h4>
 
     <?js if (data.summary) { ?>
     <p class="summary"><?js= summary ?></p>
