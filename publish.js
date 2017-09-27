@@ -142,7 +142,7 @@ function needsSignature(doclet) {
   var needsSig = false;
 
   // function and class definitions always get a signature
-  if (doclet.kind === 'function' || doclet.kind === 'class') {
+  if ((doclet.kind === 'function' || doclet.kind === 'class') && !doclet.hideconstructor) {
     needsSig = true;
   }
   // typedefs that contain functions get a signature, too
@@ -371,7 +371,7 @@ function attachModuleSymbols(doclets, modules) {
         .map(function(symbol) {
           symbol = doop(symbol);
 
-          if (symbol.kind === 'class' || symbol.kind === 'function') {
+          if ((symbol.kind === 'class' || symbol.kind === 'function') && !symbol.hideconstructor) {
             symbol.name = symbol.name.replace('module:', '(require("') + '"))';
           }
 
